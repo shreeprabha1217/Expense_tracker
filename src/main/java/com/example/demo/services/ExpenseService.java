@@ -15,8 +15,11 @@ import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ExpenseRepository;
 import com.example.demo.repositories.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @Service
+@Slf4j
 public class ExpenseService {
     
   @Autowired
@@ -32,6 +35,7 @@ public class ExpenseService {
   private ExpenseProducer expenseProducer;
 
   public Expense addExpense(Expense expense) {
+        log.debug("Inside expense service");
         if(expense.getPurpose()==null){
             throw new RuntimeException("Purpose cannot be empty");
         }

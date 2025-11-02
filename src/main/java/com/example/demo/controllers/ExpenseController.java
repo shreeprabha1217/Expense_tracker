@@ -17,13 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entities.Expense;
 import com.example.demo.services.ExpenseService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/api/expenses")
+@Slf4j
 public class ExpenseController {
 @Autowired
 private ExpenseService expenseService;
 @PostMapping("/create")
 public ResponseEntity<Expense> addExpense(@RequestBody Expense expense) {
+    log.debug("Inside expense controller");
     Expense savedExpense = expenseService.addExpense(expense);
     return ResponseEntity.status(HttpStatus.CREATED).body(savedExpense);
 }

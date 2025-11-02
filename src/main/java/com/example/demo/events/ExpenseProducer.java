@@ -20,3 +20,5 @@ public class ExpenseProducer {
         System.out.println("✅ Expense event published: " + expense);
     }
 }
+
+
