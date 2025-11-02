@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Category;
 import com.example.demo.entities.Expense;
+import com.example.demo.events.ExpenseProducer;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.ExpenseRepository;
 import com.example.demo.repositories.UserRepository;
@@ -26,6 +27,9 @@ public class ExpenseService {
 
   @Autowired
   private CategoryRepository categoryRepository;
+
+  @Autowired
+  private ExpenseProducer expenseProducer;
 
   public Expense addExpense(Expense expense) {
         if(expense.getPurpose()==null){
@@ -63,7 +67,9 @@ public class ExpenseService {
                 throw new RuntimeException("Category does not exist");
             }
         }
-        return expenseRepository.save(expense);
+        Expense saved= expenseRepository.save(expense);
+        expenseProducer.sendExpense(saved);
+        return saved;
     }
 
   public List<Expense> getExpense(){
